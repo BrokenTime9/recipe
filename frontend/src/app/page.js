@@ -13,12 +13,13 @@ export default function Home() {
 
   const onSubmit = async () => {
     const data = { title, description, ingredients, steps };
+    const api = [
+      "https://recipe-dpvf.onrender.com/api/recipes",
+      "http://localhost:5000/api/recipes",
+    ];
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/recipes",
-        data,
-      );
+      const response = await axios.post(api[0], data);
       setMessage({ type: "success", text: "Recipe submitted successfully!" });
 
       // Reset state manually
