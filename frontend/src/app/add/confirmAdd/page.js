@@ -41,7 +41,7 @@ export default function ConfirmAdd({
         <div className="mt-4">
           <h3 className="font-semibold">Ingredients:</h3>
           <ul className="list-disc list-inside text-sm">
-            {ingredients.map((e, i) => (
+            {ingredients?.map((e, i) => (
               <li key={i} className="mt-1">
                 <strong>{i + 1}:</strong> {e}
               </li>
@@ -52,7 +52,7 @@ export default function ConfirmAdd({
         <div className="mt-4">
           <h3 className="font-semibold">Steps:</h3>
           <ul className="list-decimal list-inside text-sm">
-            {steps.map((e, i) => (
+            {steps?.map((e, i) => (
               <li key={i} className="mt-1">
                 <strong>Step {i + 1}:</strong> {e}
               </li>
