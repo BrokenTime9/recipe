@@ -60,9 +60,13 @@ export default function Add() {
         {form && (
           <ConfirmAdd
             title={title}
+            setTitle={setTitle}
             description={description}
+            setDescription={setDescription}
             ingredients={ingredients}
+            setIngredients={setIngredients}
             steps={steps}
+            setSteps={setSteps}
             setMessage={setMessage}
             setForm={setForm}
           />

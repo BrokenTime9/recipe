@@ -2,9 +2,13 @@
 
 export default function ConfirmAdd({
   title,
+  setTitle,
   description,
+  setDescription,
   ingredients,
+  setIngredients,
   steps,
+  setSteps,
   setMessage,
   setForm,
 }) {
