@@ -18,7 +18,7 @@ export default function Add() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       {message && (
         <div
           className={`p-2 text-sm rounded ${
@@ -32,17 +32,18 @@ export default function Add() {
       )}
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
         <Input type="text" name="title" value={title} setValue={setTitle} />
-        <Input
-          type="text"
-          name="description"
-          value={description}
-          setValue={setDescription}
-        />
+
         <Input
           type="text"
           name="ingredients"
           value={ingredients.join(",")}
           setValue={setIngredients}
+        />
+        <Input
+          type="text"
+          name="description"
+          value={description}
+          setValue={setDescription}
         />
         <Input
           type="text"

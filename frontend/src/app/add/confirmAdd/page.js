@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 
 export default function ConfirmAdd({
   title,
@@ -21,7 +22,11 @@ export default function ConfirmAdd({
 
     try {
       const response = await axios.post(api[0], data);
-      setMessage({ type: "success", text: "recipe submitted successfully!" });
+
+      setMessage({
+        type: "success",
+        text: `recipe ${title} submitted successfully!`,
+      });
 
       // reset state manually
       setTitle("");
