@@ -10,13 +10,14 @@ connectDB();
 
 const app = express();
 
-app.use(express.json());
-
 app.use(
   cors({
     origin: ["http://localhost:3000", "https://recipe-pi-amber.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
   }),
 );
+
+app.use(express.json());
 
 app.get("/home", (req, res) => {
   res.send("chat app");
