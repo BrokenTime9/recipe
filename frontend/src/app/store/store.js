@@ -6,7 +6,7 @@ const api = [
   "http://localhost:5000/recipes/get",
 ];
 
-const url = api[0];
+const url = api[1];
 
 export const useRecipeStore = create((set, get) => ({
   allRecipes: [],
@@ -28,7 +28,7 @@ export const useRecipeStore = create((set, get) => ({
     if (get().allRecipes.length > 0) return;
 
     try {
-      const res = await axios.get(`${url}/get`);
+      const res = await axios.get(`${url}`);
       set({ allRecipes: res.data.data });
     } catch (error) {
       console.error("Failed to fetch all recipes", error);
