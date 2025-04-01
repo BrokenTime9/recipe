@@ -14,6 +14,7 @@ export default function Add() {
   const [steps, setSteps] = useState([]);
 
   const onsubmit = async () => {
+    setMessage("");
     setForm((prevForm) => !prevForm);
   };
 

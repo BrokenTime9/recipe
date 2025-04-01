@@ -25,7 +25,7 @@ export default function ConfirmAdd({
 
       setMessage({
         type: "success",
-        text: `recipe ${title} submitted successfully!`,
+        text: `recipe ${title} added successfully!`,
       });
 
       // reset state manually
