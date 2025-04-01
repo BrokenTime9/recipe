@@ -30,10 +30,10 @@ const recipeSchema = new mongoose.Schema(
   },
 );
 
-recipeSchema.index({ title: "text", description: "text", ingredients: "text" });
+recipeSchema.index({ title: "text", description: "text" });
 
 recipeSchema.virtual("summary").get(function () {
-  `${this.title} \n ${this.description ? this.description.substring(0, 50) + "..." : ""}`;
+  return `${this.title} \n ${this.description ? this.description.substring(0, 50) + "..." : ""}`;
 });
 
 const RecipeModel = mongoose.model("Recipe", recipeSchema);

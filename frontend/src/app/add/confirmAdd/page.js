@@ -16,8 +16,8 @@ export default function ConfirmAdd({
   const onsubmit = async () => {
     const data = { title, description, ingredients, steps };
     const api = [
-      "https://recipe-dpvf.onrender.com/api/recipes",
-      "http://localhost:5000/api/recipes",
+      "https://recipe-dpvf.onrender.com/recipes/add",
+      "http://localhost:5000/recipes/add",
     ];
 
     try {

@@ -1,11 +1,12 @@
 "use client";
 
 import Add from "./add/page";
+import RecipesPage from "./recipes/page";
 
-export default function home() {
+export default function Home() {
   return (
     <>
-      <p></p>
+      <RecipesPage />
     </>
   );
 }

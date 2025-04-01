@@ -59,6 +59,86 @@ const validateRecipeInput = (req, res, next) => {
   }
 };
 
+const getRecipeController = async (req, res) => {
+  try {
+    const { id, rand, ingredients, search } = req.query;
+
+    if (id) {
+      const recipe = await RecipeModel.findById(id);
+      return sendResponse(res, 200, true, "Recipe retrieved", recipe);
+    }
+
+    if (rand) {
+      // Get 5 random recipes
+      const randomRecipes = await RecipeModel.aggregate([
+        { $sample: { size: 5 } },
+      ]);
+      return sendResponse(
+        res,
+        200,
+        true,
+        "Random recipes retrieved",
+        randomRecipes,
+      );
+    }
+
+    if (ingredients) {
+      // Find recipes containing at least one of the specified ingredients
+      const ingredientArray = ingredients.split(",").map((ing) => ing.trim());
+      const recipes = await RecipeModel.find({
+        ingredients: { $in: ingredientArray },
+      });
+
+      if (recipes.length === 0) {
+        return sendResponse(
+          res,
+          200,
+          true,
+          "No recipes found with the given ingredients",
+          [],
+        );
+      }
+      return sendResponse(
+        res,
+        200,
+        true,
+        "Recipes retrieved successfully",
+        recipes,
+      );
+    }
+
+    if (search) {
+      // Perform a full-text search on title and description
+      const recipes = await RecipeModel.find({
+        $text: { $search: `"${search}"` },
+      });
+
+      if (recipes.length === 0) {
+        return sendResponse(
+          res,
+          200,
+          true,
+          "No recipes found matching the search query",
+          [],
+        );
+      }
+      return sendResponse(
+        res,
+        200,
+        true,
+        "Recipes retrieved successfully",
+        recipes,
+      );
+    }
+
+    // Get all recipes if no query is provided
+    const allRecipes = await RecipeModel.find();
+    return sendResponse(res, 200, true, "All recipes retrieved", allRecipes);
+  } catch (error) {
+    return handleError(res, error, "Failed to fetch recipes");
+  }
+};
+
 // add recipe contoller
 const addRecipeController = async (req, res) => {
   try {
@@ -82,4 +162,9 @@ const addRecipeController = async (req, res) => {
     return handleError(res, error, "Failed to add recipe");
   }
 };
-module.exports = { validateRecipeInput, addRecipeController };
+
+module.exports = {
+  validateRecipeInput,
+  addRecipeController,
+  getRecipeController,
+};

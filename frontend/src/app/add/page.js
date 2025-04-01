@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import axios from "axios";
-import { Input, input } from "@/components/input";
+import { Input } from "@/components/input";
+import Link from "next/link";
 import ConfirmAdd from "./confirmAdd/page";
 
 export default function Add() {
@@ -73,6 +74,10 @@ export default function Add() {
             setForm={setForm}
           />
         )}
+      </div>
+
+      <div className="mt-6 text-sm text-blue-600">
+        <Link href="/recipes">Go to Recipe Search</Link>
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ app.get("/home", (req, res) => {
   res.send("chat app");
 });
 
-app.use("/api", recipeRoutes);
+app.use("/recipes", recipeRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

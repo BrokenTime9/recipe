@@ -4,8 +4,10 @@ const router = express.Router();
 const {
   addRecipeController,
   validateRecipeInput,
+  getRecipeController,
 } = require("../controllers/recipeController");
 
-router.post("/recipes", validateRecipeInput, addRecipeController);
+router.post("/add", validateRecipeInput, addRecipeController);
+router.get("/get", getRecipeController);
 
 module.exports = router;
