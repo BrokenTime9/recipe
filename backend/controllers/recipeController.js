@@ -93,7 +93,7 @@ const getRecipeController = async (req, res) => {
         return sendResponse(
           res,
           200,
-          true,
+          false,
           "No recipes found with the given ingredients",
           [],
         );
@@ -117,8 +117,8 @@ const getRecipeController = async (req, res) => {
         return sendResponse(
           res,
           200,
-          true,
-          "No recipes found matching the search query",
+          false,
+          `No recipes found matching ${search}`,
           [],
         );
       }

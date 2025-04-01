@@ -14,14 +14,31 @@ export default function RecipesPage() {
     fetchRandomRecipes,
     fetchRecipe,
     fetchIngreRecipe,
+    error,
   } = useRecipeStore();
 
   const [search, setSearch] = useState("");
   const [ingredients, setIngredients] = useState("");
+  const [displayCategory, setDisplayCategory] = useState("all"); // Track which category to show
 
   useEffect(() => {
     fetchAllRecipes();
   }, []);
+
+  const handleRandomRecipes = () => {
+    setDisplayCategory("random");
+    fetchRandomRecipes();
+  };
+
+  const handleSearch = () => {
+    setDisplayCategory("search");
+    fetchRecipe(search);
+  };
+
+  const handleIngredientSearch = () => {
+    setDisplayCategory("ingredients");
+    fetchIngreRecipe(ingredients);
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -42,7 +59,7 @@ export default function RecipesPage() {
           className="border p-2 rounded w-full"
         />
         <button
-          onClick={() => fetchRecipe(search)}
+          onClick={handleSearch}
           className="bg-blue-500 text-white px-4 py-2 rounded"
         >
           Search
@@ -59,7 +76,7 @@ export default function RecipesPage() {
           className="border p-2 rounded w-full"
         />
         <button
-          onClick={() => fetchIngreRecipe(ingredients)}
+          onClick={handleIngredientSearch}
           className="bg-green-500 text-white px-4 py-2 rounded"
         >
           Find by Ingredients
@@ -68,37 +85,59 @@ export default function RecipesPage() {
 
       {/* Fetch Random Recipes */}
       <button
-        onClick={fetchRandomRecipes}
+        onClick={handleRandomRecipes}
         className="bg-purple-500 text-white px-4 py-2 rounded mb-4"
       >
         Get Random Recipes
       </button>
 
       {/* Display Recipes */}
+
+      {/* Display Recipes */}
       <div>
-        {searchedRecipes ? (
+        {displayCategory === "search" && (
           <>
-            <h2 className="text-xl font-semibold mt-4">🔍 Search Results</h2>
-            <RecipeList recipes={searchedRecipes} />
+            {searchedRecipes.length > 0 ? (
+              <>
+                <h2 className="text-xl font-semibold mt-4">
+                  🔍 Search Results
+                </h2>
+                <RecipeList recipes={searchedRecipes} />
+              </>
+            ) : (
+              <p className="text-lg text-gray-600 text-center">{error}</p>
+            )}
           </>
-        ) : ingredientRecipes.length > 0 ? (
+        )}
+
+        {displayCategory === "ingredients" && ingredientRecipes.length > 0 ? (
           <>
             <h2 className="text-xl font-semibold mt-4">
               🥗 Recipes by Ingredients
             </h2>
             <RecipeList recipes={ingredientRecipes} />
           </>
-        ) : randomRecipes.length > 0 ? (
+        ) : displayCategory === "ingredients" ? (
+          <p className="text-lg text-gray-600 text-center">{error}</p>
+        ) : null}
+
+        {displayCategory === "random" && randomRecipes.length > 0 ? (
           <>
             <h2 className="text-xl font-semibold mt-4">🎲 Random Recipes</h2>
             <RecipeList recipes={randomRecipes} />
           </>
-        ) : (
+        ) : displayCategory === "random" ? (
+          <p className="text-lg text-gray-600 text-center">{error}</p>
+        ) : null}
+
+        {displayCategory === "all" && allRecipes.length > 0 ? (
           <>
             <h2 className="text-xl font-semibold mt-4">📖 All Recipes</h2>
             <RecipeList recipes={allRecipes} />
           </>
-        )}
+        ) : displayCategory === "all" ? (
+          <p className="text-lg text-gray-600 text-center">{error}</p>
+        ) : null}
       </div>
     </div>
   );

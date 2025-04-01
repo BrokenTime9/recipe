@@ -6,7 +6,7 @@ const api = [
   "http://localhost:5000/recipes/get",
 ];
 
-const url = api[1];
+const url = api[0];
 
 export const useRecipeStore = create((set, get) => ({
   allRecipes: [],
@@ -14,10 +14,34 @@ export const useRecipeStore = create((set, get) => ({
   searchedRecipes: [],
   ingredientRecipes: [],
   recipe: null,
+  error: "",
+
+  clearSearchedRecipes: () => {
+    set({ searchedRecipes: [] });
+  },
+
+  clearRandomRecipes: () => {
+    set({ randomRecipes: [] });
+  },
+
+  clearIngredientRecipes: () => {
+    set({ ingredientRecipes: [] });
+  },
+
+  clearAllRecipes: () => {
+    set({ allRecipes: [] });
+  },
+
+  setError: (message) => {
+    set({ error: message });
+  },
 
   fetchSingleRecipe: async (id) => {
     try {
       const res = await axios.get(`${url}?id=${id}`);
+      if (!res.data.success) {
+        set({ error: res.data.message });
+      }
       set({ singleRecipe: res.data.data });
     } catch (error) {
       console.error("Failed to fetch single recipe", error);
@@ -29,6 +53,10 @@ export const useRecipeStore = create((set, get) => ({
 
     try {
       const res = await axios.get(`${url}`);
+      if (!res.data.success) {
+        set({ error: res.data.message });
+      }
+
       set({ allRecipes: res.data.data });
     } catch (error) {
       console.error("Failed to fetch all recipes", error);
@@ -38,6 +66,10 @@ export const useRecipeStore = create((set, get) => ({
   fetchRandomRecipes: async () => {
     try {
       const res = await axios.get(`${url}?rand=true`);
+      if (!res.data.success) {
+        set({ error: res.data.message });
+      }
+
       set({ randomRecipes: res.data.data });
     } catch (error) {
       console.error("Failed to fetch random recipes", error);
@@ -47,6 +79,10 @@ export const useRecipeStore = create((set, get) => ({
   fetchRecipe: async (query) => {
     try {
       const res = await axios.get(`${url}?search=${query}`);
+      if (!res.data.success) {
+        set({ error: res.data.message });
+      }
+
       set({ searchedRecipes: res.data.data });
     } catch (error) {
       console.error("Failed to fetch searched recipes", error);
@@ -56,6 +92,10 @@ export const useRecipeStore = create((set, get) => ({
   fetchIngreRecipe: async (ingredients) => {
     try {
       const res = await axios.get(`${url}?ingredients=${ingredients}`);
+      if (!res.data.success) {
+        set({ error: res.data.message });
+      }
+
       set({ ingredientRecipes: res.data.data });
     } catch (error) {
       console.error("Failed to fetch recipes by ingredients", error);
