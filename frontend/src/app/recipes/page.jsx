@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRecipeStore } from "../store/store";
+import { useRouter } from "next/navigation";
 
 export default function RecipesPage() {
   const {
@@ -15,13 +16,19 @@ export default function RecipesPage() {
     fetchRecipe,
     fetchIngreRecipe,
     error,
+    user,
+    logoutUser,
   } = useRecipeStore();
+  const router = useRouter();
 
   const [search, setSearch] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [displayCategory, setDisplayCategory] = useState("all"); // Track which category to show
 
   useEffect(() => {
+    if (user.length <= 0) {
+      router.push("/auth");
+    }
     fetchAllRecipes();
   }, []);
 
@@ -42,13 +49,36 @@ export default function RecipesPage() {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="flex justify-between">
-        <h1 className="text-3xl font-bold mb-4">🍽 Recipe Finder</h1>
-        <div className="text-2xl font-bold text-blue-400">
-          <Link href="/add">Add a recipe +</Link>
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <p className="text-3xl font-semibold text-gray-700 py-2">
+            👋 Welcome,{" "}
+            <span className="font-bold text-red-600">
+              {user?.username || "User"}
+            </span>
+          </p>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <Link
+            href="/add"
+            className="text-blue-500 hover:text-blue-700 text-lg font-semibold"
+          >
+            Add a recipe +
+          </Link>
+
+          <button
+            onClick={() => {
+              logoutUser();
+              router.push("/auth");
+            }}
+            className="text-red-500 hover:text-red-700 flex items-center gap-1 text-sm"
+          >
+            <span className="material-icons">logout</span>
+            Logout
+          </button>
         </div>
       </div>
-
       {/* Search by Recipe Name */}
       <div className="flex gap-2 mb-4">
         <input

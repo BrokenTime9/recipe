@@ -16,6 +16,29 @@ export const useRecipeStore = create((set, get) => ({
   recipe: null,
   error: "",
 
+  //auth
+  authError: "",
+  user: [],
+
+  setAuthError: (error) => {
+    set({ authError: error });
+  },
+
+  setUser: (userData) => {
+    set({ user: userData });
+  },
+
+  logoutUser: () => {
+    set({
+      user: [],
+      allRecipes: [],
+      randomRecipes: [],
+      searchedRecipes: [],
+      ingredientRecipes: [],
+      error: "",
+    });
+  },
+
   clearSearchedRecipes: () => {
     set({ searchedRecipes: [] });
   },
