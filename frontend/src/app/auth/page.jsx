@@ -29,8 +29,8 @@ export default function AuthPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const endpoint = isLogin
-      ? "http://localhost:5000/auth/login"
-      : "http://localhost:5000/auth/register";
+      ? "https://recipe-dpvf.onrender.com/auth/login"
+      : "https://recipe-dpvf.onrender.com/auth/register";
 
     try {
       const res = await axios.post(endpoint, {
